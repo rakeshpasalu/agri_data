@@ -1,0 +1,93 @@
+{
+  "crop": {
+    "canonical_name": "FINGER_MILLET",
+    "botanical_name": "Eleusine coracana",
+    "local_names": {
+      "kn": "ರಾಗಿ (Ragi)",
+      "te": "రాగి (Ragi / Taidalu)",
+      "hi": "रागी / मडुआ (Ragi / Mandua)",
+      "en": "Finger millet"
+    },
+    "crop_group": "NUTRITION_CEREALS",
+    "pilot_relevance": "Key climate-resilient staple crop of Central Dry Zone with high dietary and economic importance",
+    "verified_sources": [
+      "UAS Bangalore Package of Practices",
+      "AICRP on Small Millets, ICAR-IIMR",
+      "KVK Chitradurga Annual Reports",
+      "KSSC Catalogue 2026"
+    ]
+  },
+  "calendar": {
+    "zone": "ZONE_IV_CENTRAL_DRY_ZONE",
+    "season": "KHARIF",
+    "sowing_window": {
+      "main": "July 1 to July 31",
+      "late_contingency": "August 1 to August 20 (short duration varieties like KMR-316 or ML-365)"
+    },
+    "harvest_window": {
+      "start": "October 20",
+      "end": "November 30"
+    }
+  },
+  "soil_requirements": {
+    "ideal_textures": ["Red sandy loam", "Red loamy soil", "Well-drained gravelly soils"],
+    "ph_range": {
+      "min": 5.5,
+      "optimal_min": 6.5,
+      "optimal_max": 7.5,
+      "max": 8.2
+    },
+    "tolerance": "Remarkable drought tolerance once established; tolerates marginal soils better than maize or groundnut"
+  },
+  "water_requirements": {
+    "total_requirement_mm": [350, 450],
+    "critical_stages": [
+      "Tillering (20-30 DAS)",
+      "Flowering and grain filling (55-75 DAS)"
+    ]
+  },
+  "varieties": [
+    {
+      "name": "ML-365",
+      "duration_days": [105, 115],
+      "released_by": "UAS Bangalore",
+      "characteristics": "Blast tolerant, medium tall, high grain and straw yield, drought resilient",
+      "kssc_catalogued": true,
+      "local_dealer_availability_verified": false
+    },
+    {
+      "name": "GPU-28",
+      "duration_days": [110, 120],
+      "released_by": "UAS Bangalore",
+      "characteristics": "Widely adopted standard variety, moderate blast resistance",
+      "kssc_catalogued": true,
+      "local_dealer_availability_verified": false
+    },
+    {
+      "name": "KMR-316",
+      "duration_days": [100, 105],
+      "released_by": "UAS Bangalore",
+      "characteristics": "Short duration, suited for delayed monsoon and late kharif sowings in dry zones",
+      "kssc_catalogued": true,
+      "local_dealer_availability_verified": false
+    }
+  ],
+  "nutrient_recommendation": {
+    "status": "REGIONAL_INFERENCE",
+    "source": "UAS Bangalore Package of Practices (Zone IV)",
+    "rdf_kgha": {
+      "rainfed": { "n": 50, "p2o5": 40, "k2o": 25 },
+      "irrigated": { "n": 100, "p2o5": 50, "k2o": 50 }
+    },
+    "organic_manure": "7.5 to 10 tonnes/ha FYM or compost incorporated 2-3 weeks prior to sowing"
+  },
+  "major_pests_and_diseases": [
+    {
+      "disease": "Finger Millet Blast (Magnaporthe grisea)",
+      "stages": ["Leaf blast", "Neck blast", "Fingers blast"],
+      "symptoms": "Spindle-shaped lesions with grey centers on leaves; black lesions on neck causing head breakage",
+      "cultural_control": "Grow resistant varieties (ML-365); seed treatment with bio-agents (Trichoderma)",
+      "approved_chemical": "Tricyclazole 75% WP or carbendazim 50% WP as per CIB&RC Major Uses"
+    }
+  ]
+}

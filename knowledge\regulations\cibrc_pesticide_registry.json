@@ -1,0 +1,65 @@
+{
+  "authority": "Central Insecticides Board & Registration Committee (CIB&RC)",
+  "department": "Directorate of Plant Protection, Quarantine & Storage (PPQS), Ministry of Agriculture & Farmers Welfare, GoI",
+  "source_urls": [
+    "https://ppqs.gov.in/divisions/cib-rc/registered-products",
+    "https://ppqs.gov.in/divisions/cib-rc/major-uses-of-pesticides"
+  ],
+  "effective_data_version": "2026-07-31",
+  "safety_policy": "Strict hard-gate boundary. Banned chemicals are blocked automatically. Unregistered chemicals or off-label crop-pest pairings are blocked with status UNKNOWN.",
+  "banned_or_restricted_registry": [
+    {
+      "active_ingredient": "monocrotophos",
+      "status": "BANNED_FOR_VEGETABLES_AND_RESTRICTED",
+      "legal_basis": "Gazette notifications under Insecticides Act 1968; banned on vegetables and strictly restricted on field crops; widespread state-level bans",
+      "system_action": "BLOCK_ALL_RECOMMENDATIONS"
+    },
+    {
+      "active_ingredient": "endosulfan",
+      "status": "BANNED",
+      "legal_basis": "Supreme Court of India ban; CIB&RC banned list",
+      "system_action": "BLOCK_ALL_RECOMMENDATIONS"
+    },
+    {
+      "active_ingredient": "paraquat_dichloride",
+      "status": "RESTRICTED",
+      "legal_basis": "Restricted use with specialized training and equipment",
+      "system_action": "BLOCK_UNLESS_CERTIFIED"
+    },
+    {
+      "active_ingredient": "phorate",
+      "status": "BANNED",
+      "legal_basis": "CIB&RC banned list",
+      "system_action": "BLOCK_ALL_RECOMMENDATIONS"
+    }
+  ],
+  "registered_approved_registry": [
+    {
+      "active_ingredient": "azadirachtin",
+      "formulation": "0.03% EC / 0.15% EC / 1% EC",
+      "type": "BIOPESTICIDE_NEEM",
+      "status": "APPROVED",
+      "approved_crops": ["GROUNDNUT", "COTTON", "PULSES", "VEGETABLES", "RICE"],
+      "approved_pests": ["LEAF_MINER", "APHIDS", "THRIPS", "WHITEFLY"],
+      "safety_class": "WHO_CLASS_IV_LEAST_HAZARDOUS"
+    },
+    {
+      "active_ingredient": "trichoderma_viride",
+      "formulation": "1% WP",
+      "type": "BIOFUNGICIDE",
+      "status": "APPROVED",
+      "approved_crops": ["GROUNDNUT", "PULSES", "OILSEEDS"],
+      "approved_pests": ["ROOT_ROT", "COLLAR_ROT", "WILT"],
+      "safety_class": "BENEFICIAL_MICROORGANISM"
+    },
+    {
+      "active_ingredient": "mancozeb",
+      "formulation": "75% WP",
+      "type": "FUNGICIDE",
+      "status": "APPROVED",
+      "approved_crops": ["GROUNDNUT", "POTATO", "TOMATO", "CHILLI"],
+      "approved_pests": ["TIKKA_LEAF_SPOT", "EARLY_BLIGHT", "LATE_BLIGHT"],
+      "safety_class": "WHO_CLASS_U_UNLIKELY_ACUTE_HAZARD"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+package com.balanceepitome.agri.domain.common;
+
+public enum DataProvenance {
+    FARMER_ENTERED, FARM_MEASURED, GOVERNMENT_DATA, SCIENTIFIC_DATASET, SATELLITE_DERIVED, MODEL_DERIVED, REGIONAL_INFERENCE, DEMO_ONLY
+}

@@ -1,0 +1,60 @@
+{
+  "zone": {
+    "code": "ZONE_IV",
+    "name": "Central Dry Zone (Karnataka)",
+    "districts_covered": ["Chitradurga", "Tumkur (part)", "Davanagere (part)", "Chikkamagaluru (part)"],
+    "pilot_taluk": "Molakalmuru",
+    "pilot_village": "Hosanagalapura (Census 2011 code 605160)"
+  },
+  "climate_profile": {
+    "annual_rainfall_range_mm": [453, 718],
+    "molakalmuru_taluk_normal_rainfall_mm": 541.5,
+    "annual_rainy_days": 28,
+    "nasa_power_climatology_2001_2020": {
+      "point_coordinates": [14.887, 76.842],
+      "elevation_meters": 500.48,
+      "annual_precipitation_reanalysis_mm": 588.0,
+      "mean_temperature_c": 26.5,
+      "extreme_max_temp_c": 43.11,
+      "wettest_month": "September",
+      "driest_month": "January"
+    },
+    "drought_hazard_classification": "Very High (Gowda et al. 2025; ICAR-CRIDA dryland atlas)"
+  },
+  "soil_series_profile": {
+    "source": "ICAR-NBSS&LUP Soils and Land Use of Chitradurga District",
+    "dominant_soils": [
+      {
+        "series": "Molkalmuru Series",
+        "description": "Very deep, well drained, dark brown to dark yellowish brown loam, calcareous, occurring on gently sloping plains to valleys",
+        "limitations": "Low to medium organic carbon, low available phosphorus, gravelly phases on ridges"
+      }
+    ],
+    "taluk_soil_distribution_ha": {
+      "gravelly_red_clay": 39197,
+      "non_gravelly_red_clay": 21561,
+      "gravelly_red_loam": 5105,
+      "black_clay": 1092
+    },
+    "observed_taluk_ranges_kumar_naik_2020_n148": {
+      "ph": [6.00, 8.00],
+      "ec_dsm": [0.13, 0.80],
+      "organic_carbon_pct": [0.19, 1.00],
+      "available_nitrogen_kgha": [46.0, 238.0],
+      "available_phosphorus_kgha": [22.4, 64.4],
+      "available_potassium_kgha": [134.0, 685.0],
+      "dtpa_zinc_ppm": [0.31, 1.18],
+      "dtpa_iron_ppm": [2.23, 5.28]
+    },
+    "micronutrient_deficiency_atlas": {
+      "zinc_deficient_area_pct": 41.0,
+      "iron_deficient_area_pct": 39.9,
+      "sulphur_deficient_area_pct": 3.6
+    }
+  },
+  "groundwater_status": {
+    "cgwb_classification": "Over-exploited (5 of 6 taluks in Chitradurga)",
+    "extraction_rate_pct": 144.4,
+    "quality_index": "30% samples unsuitable due to high EC / sodium adsorption ratio; 66% require residual sodium carbonate treatment before irrigation (Abhishek et al. 2022)"
+  }
+}

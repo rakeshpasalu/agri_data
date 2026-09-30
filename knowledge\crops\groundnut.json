@@ -1,0 +1,122 @@
+{
+  "crop": {
+    "canonical_name": "GROUNDNUT",
+    "botanical_name": "Arachis hypogaea",
+    "crop_group": "OILSEEDS",
+    "pilot_relevance": "Primary oilseed crop of Central Dry Zone (Zone IV) and historically dominant in Molakalmuru taluk",
+    "verified_sources": [
+      "UAS Bangalore Package of Practices (Zone IV)",
+      "AICRP Dryland Agriculture, GKVK Bengaluru",
+      "KSSC Variety Catalogue 2026",
+      "NBSS&LUP Soils of Chitradurga"
+    ]
+  },
+  "calendar": {
+    "zone": "ZONE_IV_CENTRAL_DRY_ZONE",
+    "season": "KHARIF",
+    "sowing_window": {
+      "start": "June 15 (onset of South-West monsoon)",
+      "end": "July 31",
+      "optimal": "First fortnight of July"
+    },
+    "harvest_window": {
+      "start": "October 15",
+      "end": "November 30"
+    },
+    "contingency_note": "Dry sowing on shallow soils strictly warned against in erratic monsoon years (ICAR 2025 dryland advisory)"
+  },
+  "soil_requirements": {
+    "ideal_textures": ["Red sandy loam", "Loamy sand", "Well-drained red gravelly loam"],
+    "unfavorable_textures": ["Heavy black clay with poor drainage (causes pod rot and difficult digging)"],
+    "ph_range": {
+      "min": 6.0,
+      "optimal_min": 6.5,
+      "optimal_max": 7.5,
+      "max": 8.2
+    },
+    "drainage": "Well drained essential; sensitive to waterlogging"
+  },
+  "water_requirements": {
+    "total_requirement_mm": [500, 700],
+    "critical_stages": [
+      "Flowering (20-30 DAS)",
+      "Pegging (40-50 DAS)",
+      "Pod development (60-80 DAS)"
+    ],
+    "drought_hazard_note": "Central Dry Zone has very-high drought hazard. Rainfed yields fluctuate widely between normal (1,474 kg/ha district avg) and drought years."
+  },
+  "varieties": [
+    {
+      "name": "TMV-2",
+      "type": "Spanish bunch",
+      "duration_days": [105, 110],
+      "released_by": "TNAU / Adopted statewide in Karnataka",
+      "characteristics": "Erect, medium bold pods, popular with rainfed farmers",
+      "kssc_catalogued": true,
+      "local_dealer_availability_verified": false
+    },
+    {
+      "name": "GPBD-4",
+      "type": "Spanish bunch",
+      "duration_days": [110, 120],
+      "released_by": "UAS Dharwad",
+      "characteristics": "Resistant to late leaf spot (tikka) and rust, high oil content",
+      "kssc_catalogued": true,
+      "local_dealer_availability_verified": false
+    },
+    {
+      "name": "K-6",
+      "type": "Bunch",
+      "duration_days": [105, 115],
+      "released_by": "UAS",
+      "characteristics": "Tolerant to mid-season moisture stress",
+      "kssc_catalogued": true,
+      "local_dealer_availability_verified": false
+    },
+    {
+      "name": "GKVK-5",
+      "type": "Bunch",
+      "duration_days": [105, 110],
+      "released_by": "UAS Bangalore",
+      "characteristics": "Bred specifically for Southern and Central Dry Zones of Karnataka",
+      "kssc_catalogued": true,
+      "local_dealer_availability_verified": false
+    }
+  ],
+  "nutrient_evidence_conflict": {
+    "status": "CONFLICTING_EVIDENCE",
+    "description": "Two authoritative sources provide different Recommended Doses of Fertilizers (RDF)",
+    "records": [
+      {
+        "source": "UAS Bangalore Package of Practices",
+        "authority": "UNIVERSITY",
+        "npk_kgha": { "n": 25, "p2o5": 75, "k2o": 37.5 },
+        "secondary_nutrients": "500 kg/ha gypsum (applied in 2 splits: basal and pegging)",
+        "condition": "General Karnataka Zone IV irrigated or adequate moisture"
+      },
+      {
+        "source": "ISSS NARP Central Dry Zone Table",
+        "authority": "RESEARCH_INSTITUTION",
+        "npk_kgha": { "n": 25, "p2o5": 50, "k2o": 25 },
+        "secondary_nutrients": "Gypsum depending on soil calcium status",
+        "condition": "Explicitly rainfed dryland Alfisols"
+      }
+    ],
+    "resolution_rule": "DO NOT AVERAGE. If plot is strictly rainfed, report 25:50:25 as the dryland baseline with conflict noted. If farmer has soil test, compute STCR target dose instead."
+  },
+  "major_pests_and_diseases": [
+    {
+      "pest": "Leaf Miner (Aproaerema modicella)",
+      "symptoms": "Blistering on leaflets, webbed leaves, drying of foliage",
+      "cultural_control": "Intercropping with redgram or castor; light traps",
+      "approved_chemical": "Azadirachtin 0.03% EC or chlorantraniliprole 18.5 SC (Check CIB&RC)",
+      "banned_warning": "Older extension PDFs mention monocrotophos 36 SL. Monocrotophos is BANNED/RESTRICTED by CIB&RC. Hard safety gate blocks it."
+    },
+    {
+      "disease": "Late Leaf Spot / Tikka (Phaeoisariopsis personata)",
+      "symptoms": "Dark brown circular spots on leaf undersides, premature defoliation",
+      "cultural_control": "Crop rotation, use resistant varieties like GPBD-4",
+      "approved_chemical": "Mancozeb 75% WP or hexaconazole 5% SC as per CIB&RC Major Uses"
+    }
+  ]
+}

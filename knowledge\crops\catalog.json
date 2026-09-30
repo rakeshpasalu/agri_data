@@ -1,0 +1,281 @@
+{
+  "catalog_version": 1,
+  "description": "Evidence-linked crop profiles used by the recommendation service. Add or update profiles here; the ranking engine discovers them at runtime.",
+  "sources": {
+    "chitradurga_crops": {
+      "label": "ICAR: Onion seed production for self-reliance and higher returns (Chitradurga district context)",
+      "url": "https://icar.gov.in/hi/node/4599",
+      "scope": "District-level crop context; reports finger millet, maize, pigeonpea, groundnut, cotton, onion, coconut, banana, arecanut and millets."
+    },
+    "faostat_ecocrop": {
+      "label": "FAO ECOCROP crop ecological requirements",
+      "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/",
+      "scope": "Broad global ecological envelope; screening aid only, not a local package of practices or yield prediction."
+    },
+    "uasb_varieties": {
+      "label": "University of Agricultural Sciences, Bengaluru: crop varieties and technologies",
+      "url": "https://www.uasbangalore.edu.in/en/crop-based-technologies-approved-for-commercialisation/",
+      "scope": "State-level variety release/catalogue information; does not confirm dealer stock or Hosanagalapura trial results."
+    },
+    "solar_dolly": {
+      "label": "Solar Seeds: Dolly pole Dolichos product catalogue",
+      "url": "https://www.solarseeds.co.in/dolichos-pole.html",
+      "scope": "Seed-company product description; not independent local performance evidence."
+    },
+    "naavi_listing": {
+      "label": "Retail product listing: Naavi F1 ridge gourd",
+      "url": "https://www.bighaat.com/products/naavi-ridge-gourd/",
+      "scope": "Retail catalogue identification; local performance and current stock are unverified."
+    },
+    "icar_kharif_advisory": {
+      "label": "ICAR Kharif agro-advisories for farmers 2025",
+      "url": "https://www.icar.gov.in/sites/default/files/Circulars/ICAR%20En-Kharif%20Agro-Advisories%20for%20Farmers%202025.pdf",
+      "scope": "Seasonal Karnataka advisory; recommends sowing only after adequate root-zone moisture, and describes dryland moisture-conservation practices."
+    }
+  },
+  "crops": [
+    {
+      "id": "field_bean",
+      "canonical_name": "FIELD_BEAN",
+      "scientific_name": "Lablab purpureus",
+      "names": {
+        "en": "Field bean / Avare",
+        "kn": "ಅವರೆಕಾಯಿ",
+        "te": "చిక్కుడు",
+        "hi": "सेम"
+      },
+      "market_aliases": ["field bean", "field beans", "avare", "avarekai", "avarekayi", "dolichos bean", "hyacinth bean", "lablab"],
+      "regional_context": "A locally prioritized candidate supplied by the farmer; the app will only show prices when an exact market-commodity mapping is available.",
+      "ecological_envelope": {
+        "temperature_c": {"optimal": [18, 32], "absolute": [3, 38]},
+        "annual_rainfall_mm": {"optimal": [600, 1000], "absolute": [200, 2500]},
+        "soil_ph": {"optimal": [5, 7.5], "absolute": [4.5, 8]},
+        "source": "faostat_ecocrop",
+        "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1311"
+      },
+      "varieties": [
+        {
+          "name": "Dolly (pole Dolichos)",
+          "source": "Solar Seeds product catalogue",
+          "source_url": "https://www.solarseeds.co.in/dolichos-pole.html",
+          "description": "Seed-company listing says first picking around 65–75 days; check the packet for season, lot, and suitability. Local field performance and Hosanagalapura availability are unverified.",
+          "evidence_type": "industry_catalogue"
+        },
+        {
+          "name": "Hebbal Avare-4 (HA-4)",
+          "source": "UAS Bengaluru variety catalogue",
+          "source_url": "https://www.uasbangalore.edu.in/en/crop-based-technologies-approved-for-commercialisation/",
+          "description": "University-listed field-bean variety. Local stock and plot-level performance are unverified.",
+          "evidence_type": "university_catalogue"
+        },
+        {
+          "name": "Hebbal Avare-3 (HA-3)",
+          "source": "UAS Bengaluru variety catalogue",
+          "source_url": "https://www.uasbangalore.edu.in/en/crop-based-technologies-approved-for-commercialisation/",
+          "description": "University-listed field-bean variety. Local stock and plot-level performance are unverified.",
+          "evidence_type": "university_catalogue"
+        }
+      ],
+      "evidence": [
+        {"label": "FAO ECOCROP ecological envelope", "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1311", "scope": "Global species-level climate/soil screen."},
+        {"label": "UAS Bengaluru released crop technologies", "url": "https://www.uasbangalore.edu.in/en/crop-based-technologies-approved-for-commercialisation/", "scope": "State-level variety record."},
+        {"label": "Farmer-priority seed lead: Dolly", "url": "https://www.solarseeds.co.in/dolichos-pole.html", "scope": "Company catalogue claim; no local trial evidence."}
+      ]
+    },
+    {
+      "id": "ridge_gourd",
+      "canonical_name": "RIDGE_GOURD",
+      "scientific_name": "Luffa acutangula",
+      "names": {
+        "en": "Ridge gourd",
+        "kn": "ಹೀರೆಕಾಯಿ",
+        "te": "బీరకాయ",
+        "hi": "तोरई"
+      },
+      "market_aliases": ["ridge gourd", "ridgeguard", "ridgeguard(tori)", "ridge gourd (tori)", "hirekayi", "heerekai", "heerekayi", "torai"],
+      "regional_context": "A farmer-prioritized vegetable candidate. FAO's broad rainfall envelope is well above the local dry-zone normal, so consider only with reliable water and plot-specific advice.",
+      "ecological_envelope": {
+        "temperature_c": {"optimal": [20, 32], "absolute": [15, 38]},
+        "annual_rainfall_mm": {"optimal": [1200, 2000], "absolute": [700, 3000]},
+        "soil_ph": {"optimal": [5.5, 7], "absolute": [4.5, 7.5]},
+        "source": "faostat_ecocrop",
+        "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1373"
+      },
+      "varieties": [
+        {
+          "name": "Naavi F1",
+          "source": "Retail product listing (East-West Seeds)",
+          "source_url": "https://www.bighaat.com/products/naavi-ridge-gourd/",
+          "description": "Listed as an East-West Seeds ridge-gourd hybrid. Verify the exact brand, packet, dealer stock, and local performance before purchase.",
+          "evidence_type": "retail_catalogue"
+        }
+      ],
+      "evidence": [
+        {"label": "FAO ECOCROP ecological envelope", "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1373", "scope": "Global species-level screen; not a local irrigated-crop trial."},
+        {"label": "Naavi F1 retailer catalogue listing", "url": "https://www.bighaat.com/products/naavi-ridge-gourd/", "scope": "Product identity only; stock and local performance unverified."}
+      ]
+    },
+    {
+      "id": "groundnut",
+      "canonical_name": "GROUNDNUT",
+      "scientific_name": "Arachis hypogaea",
+      "names": {"en": "Groundnut", "kn": "ಕಡಲೆಕಾಯಿ", "te": "వేరుశెనగ", "hi": "मूंगफली"},
+      "market_aliases": ["groundnut", "groundnuts", "peanut", "peanuts", "kadlekai", "kadlekayi", "shenga"],
+      "regional_context": "Reported among Chitradurga district's major crops by ICAR.",
+      "ecological_envelope": {
+        "temperature_c": {"optimal": [22, 32], "absolute": [10, 45]},
+        "annual_rainfall_mm": {"optimal": [600, 1500], "absolute": [400, 4000]},
+        "soil_ph": {"optimal": [5.5, 6.5], "absolute": [4.5, 8.5]},
+        "source": "faostat_ecocrop",
+        "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2199"
+      },
+      "varieties": [
+        {
+          "name": "GKVK-5",
+          "source": "UAS Bengaluru variety catalogue",
+          "source_url": "https://www.uasbangalore.edu.in/en/crop-based-technologies-approved-for-commercialisation/",
+          "description": "University-listed groundnut variety. Local seed stock and plot performance are unverified.",
+          "evidence_type": "university_catalogue"
+        }
+      ],
+      "evidence": [
+        {"label": "FAO ECOCROP ecological envelope", "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2199", "scope": "Global species-level climate/soil screen."},
+        {"label": "ICAR Chitradurga crop context", "url": "https://icar.gov.in/hi/node/4599", "scope": "District-level crop context."}
+      ]
+    },
+    {
+      "id": "finger_millet",
+      "canonical_name": "FINGER_MILLET",
+      "scientific_name": "Eleusine coracana",
+      "names": {"en": "Finger millet / Ragi", "kn": "ರಾಗಿ", "te": "రాగి", "hi": "रागी"},
+      "market_aliases": ["finger millet", "ragi", "raggi", "mandua", "nachni"],
+      "regional_context": "Reported among Chitradurga district's major crops by ICAR.",
+      "ecological_envelope": {
+        "temperature_c": {"optimal": [18, 30], "absolute": [8, 35]},
+        "annual_rainfall_mm": {"optimal": [500, 1100], "absolute": [300, 4300]},
+        "soil_ph": {"optimal": [6, 7], "absolute": [5.5, 8.2]},
+        "source": "faostat_ecocrop",
+        "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=5657"
+      },
+      "varieties": [
+        {
+          "name": "ML-365",
+          "source": "UAS Bengaluru variety catalogue",
+          "source_url": "https://www.uasbangalore.edu.in/en/crop-based-technologies-approved-for-commercialisation/",
+          "description": "University-listed finger-millet variety. Local seed stock and plot performance are unverified.",
+          "evidence_type": "university_catalogue"
+        },
+        {
+          "name": "KMR-316",
+          "source": "UAS Bengaluru variety catalogue",
+          "source_url": "https://www.uasbangalore.edu.in/en/crop-based-technologies-approved-for-commercialisation/",
+          "description": "University-listed finger-millet variety. Confirm planting window with local extension staff.",
+          "evidence_type": "university_catalogue"
+        }
+      ],
+      "evidence": [
+        {"label": "FAO ECOCROP ecological envelope", "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=5657", "scope": "Global species-level climate/soil screen."},
+        {"label": "ICAR Chitradurga crop context", "url": "https://icar.gov.in/hi/node/4599", "scope": "District-level crop context."}
+      ]
+    },
+    {
+      "id": "maize",
+      "canonical_name": "MAIZE",
+      "scientific_name": "Zea mays",
+      "names": {"en": "Maize", "kn": "ಮೆಕ್ಕೆಜೋಳ", "te": "మొక్కజొన్న", "hi": "मक्का"},
+      "market_aliases": ["maize", "corn", "makka", "makai"],
+      "regional_context": "Reported among Chitradurga district's major crops by ICAR.",
+      "ecological_envelope": {
+        "temperature_c": {"optimal": [18, 33], "absolute": [10, 47]},
+        "annual_rainfall_mm": {"optimal": [600, 1200], "absolute": [400, 1800]},
+        "soil_ph": {"optimal": [5, 7], "absolute": [4.5, 8.5]},
+        "source": "faostat_ecocrop",
+        "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2175"
+      },
+      "varieties": [],
+      "evidence": [
+        {"label": "FAO ECOCROP ecological envelope", "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2175", "scope": "Global species-level climate/soil screen."},
+        {"label": "ICAR Chitradurga crop context", "url": "https://icar.gov.in/hi/node/4599", "scope": "District-level crop context."}
+      ]
+    },
+    {
+      "id": "pigeonpea",
+      "canonical_name": "PIGEONPEA",
+      "scientific_name": "Cajanus cajan",
+      "names": {"en": "Pigeon pea / Red gram", "kn": "ತೊಗರಿ", "te": "కందులు", "hi": "अरहर"},
+      "market_aliases": ["pigeon pea", "pigeonpea", "red gram", "redgram", "arhar", "tur", "toor"],
+      "regional_context": "Reported among Chitradurga district's major crops by ICAR.",
+      "ecological_envelope": {
+        "temperature_c": {"optimal": [18, 38], "absolute": [10, 45]},
+        "annual_rainfall_mm": {"optimal": [600, 1500], "absolute": [400, 4000]},
+        "soil_ph": {"optimal": [5, 7], "absolute": [4.5, 8.4]},
+        "source": "faostat_ecocrop",
+        "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=576"
+      },
+      "varieties": [],
+      "evidence": [
+        {"label": "FAO ECOCROP ecological envelope", "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=576", "scope": "Global species-level climate/soil screen."},
+        {"label": "ICAR Chitradurga crop context", "url": "https://icar.gov.in/hi/node/4599", "scope": "District-level crop context."}
+      ]
+    },
+    {
+      "id": "onion",
+      "canonical_name": "ONION",
+      "scientific_name": "Allium cepa",
+      "names": {"en": "Onion", "kn": "ಈರುಳ್ಳಿ", "te": "ఉల్లిపాయ", "hi": "प्याज"},
+      "market_aliases": ["onion", "onions", "eerulli", "vengayam"],
+      "regional_context": "ICAR reports substantial onion cultivation and seed demand in Chitradurga district.",
+      "ecological_envelope": {
+        "temperature_c": {"optimal": [12, 25], "absolute": [4, 30]},
+        "annual_rainfall_mm": {"optimal": [350, 600], "absolute": [300, 2800]},
+        "soil_ph": {"optimal": [6, 7], "absolute": [4.3, 8.3]},
+        "source": "faostat_ecocrop",
+        "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=551"
+      },
+      "varieties": [],
+      "evidence": [
+        {"label": "FAO ECOCROP ecological envelope", "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=551", "scope": "Global species-level climate/soil screen."},
+        {"label": "ICAR Chitradurga onion context", "url": "https://icar.gov.in/hi/node/4599", "scope": "District-level crop context."}
+      ]
+    },
+    {
+      "id": "chickpea",
+      "canonical_name": "CHICKPEA",
+      "scientific_name": "Cicer arietinum",
+      "names": {"en": "Chickpea / Bengal gram", "kn": "ಕಡಲೆ", "te": "శనగ", "hi": "चना"},
+      "market_aliases": ["chickpea", "bengal gram", "gram", "chana", "kadale"],
+      "regional_context": "The existing crop knowledge base lists this as a regional dryland pulse; local seasonal fit still requires validation.",
+      "ecological_envelope": {
+        "temperature_c": {"optimal": [15, 29], "absolute": [7, 35]},
+        "annual_rainfall_mm": {"optimal": [600, 1000], "absolute": [300, 1800]},
+        "soil_ph": {"optimal": [6, 8.5], "absolute": [4.7, 9.5]},
+        "source": "faostat_ecocrop",
+        "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2479"
+      },
+      "varieties": [],
+      "evidence": [
+        {"label": "FAO ECOCROP ecological envelope", "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2479", "scope": "Global species-level climate/soil screen."}
+      ]
+    },
+    {
+      "id": "cotton",
+      "canonical_name": "COTTON",
+      "scientific_name": "Gossypium hirsutum",
+      "names": {"en": "Cotton", "kn": "ಹತ್ತಿ", "te": "పత్తి", "hi": "कपास"},
+      "market_aliases": ["cotton", "kapas", "cotton seed"],
+      "regional_context": "Reported among Chitradurga district's major crops by ICAR.",
+      "ecological_envelope": {
+        "temperature_c": {"optimal": [22, 36], "absolute": [15, 42]},
+        "annual_rainfall_mm": {"optimal": [750, 1200], "absolute": [450, 1500]},
+        "soil_ph": {"optimal": [6, 7.5], "absolute": [5, 9.5]},
+        "source": "faostat_ecocrop",
+        "source_url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1160"
+      },
+      "varieties": [],
+      "evidence": [
+        {"label": "FAO ECOCROP ecological envelope", "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1160", "scope": "Global species-level climate/soil screen."},
+        {"label": "ICAR Chitradurga crop context", "url": "https://icar.gov.in/hi/node/4599", "scope": "District-level crop context."}
+      ]
+    }
+  ]
+}

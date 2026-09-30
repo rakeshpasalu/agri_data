@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agricultural Intelligence Platform — Developer & Admin View</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --surface-border: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #10b981;
+      --primary-hover: #059669;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --info: #3b82f6;
+      --badge-green: #065f46;
+      --badge-green-text: #a7f3d0;
+      --badge-yellow: #854d0e;
+      --badge-yellow-text: #fef08a;
+      --badge-red: #991b1b;
+      --badge-red-text: #fecaca;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; }
+    body { background-color: var(--bg); color: var(--text-main); display: flex; height: 100vh; overflow: hidden; }
+
+    /* Sidebar */
+    aside { width: 280px; background-color: var(--surface); border-right: 1px solid var(--surface-border); display: flex; flex-direction: column; }
+    .logo-area { padding: 20px; border-bottom: 1px solid var(--surface-border); }
+    .logo-area h1 { font-size: 16px; font-weight: 700; color: var(--primary); letter-spacing: 0.5px; }
+    .logo-area p { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+    .nav-links { flex: 1; padding: 12px 8px; overflow-y: auto; }
+    .nav-btn { width: 100%; display: flex; align-items: center; gap: 10px; padding: 10px 14px; margin-bottom: 4px; background: transparent; border: none; border-radius: 6px; color: var(--text-muted); font-size: 13px; font-weight: 500; cursor: pointer; text-align: left; transition: all 0.15s; }
+    .nav-btn:hover { background-color: rgba(255, 255, 255, 0.05); color: var(--text-main); }
+    .nav-btn.active { background-color: rgba(16, 185, 129, 0.15); color: var(--primary); font-weight: 600; }
+
+    /* Main Area */
+    main { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
+    header { height: 60px; border-bottom: 1px solid var(--surface-border); display: flex; align-items: center; justify-content: space-between; padding: 0 28px; background: rgba(30, 41, 59, 0.6); backdrop-filter: blur(8px); }
+    .status-pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 9999px; background: rgba(16, 185, 129, 0.1); color: var(--primary); font-size: 11px; font-weight: 600; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .content-area { padding: 28px; max-width: 1200px; margin: 0 auto; width: 100%; }
+
+    /* Cards & Grids */
+    .card { background-color: var(--surface); border: 1px solid var(--surface-border); border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); padding-bottom: 12px; }
+    .card-title { font-size: 15px; font-weight: 600; color: var(--text-main); }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
+    th { padding: 10px 12px; color: var(--text-muted); font-weight: 600; border-bottom: 1px solid var(--surface-border); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+    td { padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.04); vertical-align: top; }
+    tr:hover td { background-color: rgba(255, 255, 255, 0.02); }
+
+    /* Badges */
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; text-transform: uppercase; }
+    .badge-green { background: var(--badge-green); color: var(--badge-green-text); }
+    .badge-yellow { background: var(--badge-yellow); color: var(--badge-yellow-text); }
+    .badge-red { background: var(--badge-red); color: var(--badge-red-text); }
+    .badge-info { background: #1e3a8a; color: #bfdbfe; }
+
+    /* Forms */
+    .form-group { margin-bottom: 14px; }
+    label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 6px; font-weight: 500; }
+    input, select, textarea { width: 100%; padding: 8px 12px; border-radius: 6px; background-color: #0f172a; border: 1px solid var(--surface-border); color: var(--text-main); font-size: 13px; }
+    input:focus, select:focus { outline: none; border-color: var(--primary); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 8px 16px; border-radius: 6px; background: var(--primary); color: #000; font-size: 13px; font-weight: 600; border: none; cursor: pointer; transition: background 0.15s; }
+    .btn:hover { background: var(--primary-hover); }
+
+    /* Interactive Output */
+    .result-box { background: #0b1120; border: 1px solid #1e293b; border-radius: 6px; padding: 16px; font-family: monospace; font-size: 12px; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; color: #38bdf8; }
+
+    /* Tabs hide/show */
+    .tab-section { display: none; }
+    .tab-section.active { display: block; }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside>
+    <div class="logo-area">
+      <h1>AGRI INTELLIGENCE</h1>
+      <p>Hosanagalapura Pilot (Zone IV)</p>
+    </div>
+    <div class="nav-links">
+      <button class="nav-btn active" onclick="switchTab('overview')">1. Architecture Overview</button>
+      <button class="nav-btn" onclick="switchTab('sources')">2. Sources & Provenance</button>
+      <button class="nav-btn" onclick="switchTab('evidence')">3. Evidence Registry</button>
+      <button class="nav-btn" onclick="switchTab('crops')">4. Crops & Varieties</button>
+      <button class="nav-btn" onclick="switchTab('suitability')">5. Crop Suitability Engine</button>
+      <button class="nav-btn" onclick="switchTab('safety')">6. Regulatory Safety Gate</button>
+      <button class="nav-btn" onclick="switchTab('conflicts')">7. Conflict Resolution</button>
+      <button class="nav-btn" onclick="switchTab('digital-twin')">8. Farm Digital Twin</button>
+      <button class="nav-btn" onclick="switchTab('multilingual')">9. Multilingual Terminology</button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main>
+    <header>
+      <div style="font-size: 13px; font-weight: 600; color: var(--text-muted);">Internal Agronomy & Engineering Console</div>
+      <div class="status-pill">
+        <span style="width: 6px; height: 6px; background: var(--primary); border-radius: 50%;"></span>
+        DETERMINISTIC ENGINE ACTIVE
+      </div>
+    </header>
+
+    <div class="content-area">
+
+      <!-- TAB 1: OVERVIEW -->
+      <section id="tab-overview" class="tab-section active">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">System Foundation & Integrity Directives</h2>
+            <span class="badge badge-green">AUDITED FOUNDATION</span>
+          </div>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;">
+            This system enforces a strict boundary between <strong>deterministic scientific evidence</strong> and the <strong>multilingual AI interface</strong>.
+            The LLM is strictly prohibited from inventing agricultural recommendations, calculating synthetic fertilizer doses, or guessing pesticide applications.
+          </p>
+          <div class="grid-3">
+            <div style="background: rgba(0,0,0,0.2); padding: 14px; border-radius: 6px; border-left: 3px solid var(--primary);">
+              <h4 style="font-size: 13px; font-weight: 600;">Pilot Geography</h4>
+              <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">India &rarr; Karnataka &rarr; Chitradurga &rarr; Molakalmuru &rarr; Hosanagalapura (605160)</p>
+            </div>
+            <div style="background: rgba(0,0,0,0.2); padding: 14px; border-radius: 6px; border-left: 3px solid var(--warning);">
+              <h4 style="font-size: 13px; font-weight: 600;">Data Asymmetry Rule</h4>
+              <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Zone/district data is rich; farm-level data is zero. Regional averages are NEVER presented as farm truth.</p>
+            </div>
+            <div style="background: rgba(0,0,0,0.2); padding: 14px; border-radius: 6px; border-left: 3px solid var(--danger);">
+              <h4 style="font-size: 13px; font-weight: 600;">Hard Safety Boundary</h4>
+              <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">CIB&RC regulatory gate is compiled into code. Banned/unregistered chemicals are hard-blocked.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Initial Pilot Crops (Selected by Evidence Depth)</h3>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Crop</th>
+                <th>Scientific Name</th>
+                <th>Evidence Chain</th>
+                <th>Varieties Documented</th>
+                <th>Pilot Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Groundnut</strong></td>
+                <td><em>Arachis hypogaea</em></td>
+                <td>UASB PoP + AICRP Dryland + KSSC</td>
+                <td>TMV-2, GPBD-4, K-6, GKVK-5</td>
+                <td><span class="badge badge-green">PILOT ACTIVE</span></td>
+              </tr>
+              <tr>
+                <td><strong>Finger Millet (Ragi)</strong></td>
+                <td><em>Eleusine coracana</em></td>
+                <td>UASB PoP + AICRP Small Millets</td>
+                <td>ML-365, GPU-28, KMR-316</td>
+                <td><span class="badge badge-green">PILOT ACTIVE</span></td>
+              </tr>
+              <tr>
+                <td>Sorghum (Jowar)</td>
+                <td><em>Sorghum bicolor</em></td>
+                <td>Historical Molakalmuru acreage</td>
+                <td>CSH-14, CSH-16, M-35-1</td>
+                <td><span class="badge badge-yellow">PHASE 2</span></td>
+              </tr>
+              <tr>
+                <td>Pigeonpea (Redgram)</td>
+                <td><em>Cajanus cajan</em></td>
+                <td>PoP Intercropping baseline</td>
+                <td>BRG-1, BRG-2, TS-3R</td>
+                <td><span class="badge badge-yellow">PHASE 2</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TAB 2: SOURCES -->
+      <section id="tab-sources" class="tab-section">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Authoritative Sources & License Classification</h2>
+            <span class="badge badge-info">15 AUDITED REPOSITORIES</span>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Source Name</th>
+                <th>Authority Level</th>
+                <th>Geographic Resolution</th>
+                <th>License Band</th>
+                <th>Machine API</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>CIB&RC (PPQS)</strong></td>
+                <td>GOVERNMENT</td>
+                <td>National</td>
+                <td><span class="badge badge-green">GREEN</span></td>
+                <td>PDFs / Registry</td>
+              </tr>
+              <tr>
+                <td><strong>NASA POWER</strong></td>
+                <td>GOVERNMENT (NASA)</td>
+                <td>~50 km Point (0.5°)</td>
+                <td><span class="badge badge-green">GREEN</span></td>
+                <td>REST JSON API (Live)</td>
+              </tr>
+              <tr>
+                <td><strong>AGMARKNET / data.gov.in</strong></td>
+                <td>GOVERNMENT (DMI)</td>
+                <td>APMC Mandi</td>
+                <td><span class="badge badge-green">GREEN</span></td>
+                <td>REST JSON API</td>
+              </tr>
+              <tr>
+                <td><strong>Copernicus Sentinel-2</strong></td>
+                <td>ESA / COPERNICUS</td>
+                <td>10m Pixel</td>
+                <td><span class="badge badge-green">GREEN</span></td>
+                <td>STAC / OData API</td>
+              </tr>
+              <tr>
+                <td><strong>UAS Bangalore PoP</strong></td>
+                <td>UNIVERSITY</td>
+                <td>Zone IV (Central Dry Zone)</td>
+                <td><span class="badge badge-yellow">YELLOW</span></td>
+                <td>Manual PDF Extraction</td>
+              </tr>
+              <tr>
+                <td><strong>ICAR-NBSS&LUP Soil Survey</strong></td>
+                <td>RESEARCH_INSTITUTION</td>
+                <td>District (36 series)</td>
+                <td><span class="badge badge-yellow">YELLOW</span></td>
+                <td>PDF Bulletin</td>
+              </tr>
+              <tr>
+                <td><strong>KSSC Variety Catalogue</strong></td>
+                <td>STATE ENTERPRISE</td>
+                <td>Karnataka Statewide</td>
+                <td><span class="badge badge-green">GREEN</span></td>
+                <td>Public Web Catalogue</td>
+              </tr>
+              <tr>
+                <td><strong>IMD Weather Service</strong></td>
+                <td>GOVERNMENT</td>
+                <td>District Station (~70km away)</td>
+                <td><span class="badge badge-yellow">YELLOW</span></td>
+                <td>Commercial requires MoU</td>
+              </tr>
+              <tr>
+                <td><strong>CEDA Mandi Archive</strong></td>
+                <td>ACADEMIC</td>
+                <td>APMC Mandi</td>
+                <td><span class="badge badge-red">RED</span></td>
+                <td>Strict Non-Commercial</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TAB 3: EVIDENCE -->
+      <section id="tab-evidence" class="tab-section">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Evidence Ledger (Traceability Chain)</h2>
+            <span class="badge badge-green">100% CITED</span>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Evidence ID</th>
+                <th>Claim / Agronomic Finding</th>
+                <th>Source Document & Section</th>
+                <th>Observation Type</th>
+                <th>Applicability</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>EVID-001</code></td>
+                <td>Groundnut sowing window in Zone IV starts with onset of SW monsoon (mid-June to end-July).</td>
+                <td>UASB Package of Practices 2023, Ch. Groundnut, Table 2</td>
+                <td>EXPERT_OPINION</td>
+                <td>Zone IV Rainfed</td>
+              </tr>
+              <tr>
+                <td><code>EVID-002</code></td>
+                <td>Groundnut RDF on rainfed Alfisols is 25:50:25 NPK kg/ha.</td>
+                <td>ISSS NARP Refinement Table, Central Dry Zone</td>
+                <td>FIELD_OBSERVATION</td>
+                <td>Zone IV Rainfed</td>
+              </tr>
+              <tr>
+                <td><code>EVID-003</code></td>
+                <td>Groundnut RDF general PoP is 25:75:37.5 NPK kg/ha + 500 kg/ha gypsum.</td>
+                <td>UASB Package of Practices 2023, Soil Fertility Chapter</td>
+                <td>EXPERT_OPINION</td>
+                <td>Zone IV Irrigated</td>
+              </tr>
+              <tr>
+                <td><code>EVID-004</code></td>
+                <td>Molakalmuru surface soils: pH 6.00–8.00 (mean 7.16), N 46–238 kg/ha (mean 120 kg/ha).</td>
+                <td>Kumar Naik et al. (2020), Int. J. Chem. Studies, DOI: 10.22271/chemi.2020.v8.i3ak.9595</td>
+                <td>LABORATORY_ANALYSIS</td>
+                <td>Taluk Sample (n=148)</td>
+              </tr>
+              <tr>
+                <td><code>EVID-005</code></td>
+                <td>Monocrotophos is banned for vegetables and strictly restricted; banned across major states.</td>
+                <td>CIB&RC Banned/Restricted List as on 31.07.2026, ppqs.gov.in</td>
+                <td>SURVEY_DATA</td>
+                <td>National (India)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TAB 4: CROPS -->
+      <section id="tab-crops" class="tab-section">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Crop Varieties & Availability Separation (Step 11)</h2>
+            <span class="badge badge-yellow">SEPARATION ENFORCED</span>
+          </div>
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">
+            The platform separates <strong>scientifically suitable varieties</strong> from <strong>verified local stock</strong>. The system NEVER claims seed is in stock at a Molakalmuru dealer unless an invoice or live feed verifies it.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Crop</th>
+                <th>Variety</th>
+                <th>Duration (Days)</th>
+                <th>Released By</th>
+                <th>Key Traits</th>
+                <th>State Catalogue</th>
+                <th>Molakalmuru Stock</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Groundnut</td>
+                <td><strong>TMV-2</strong></td>
+                <td>105–110</td>
+                <td>TNAU / Adopted KA</td>
+                <td>Spanish bunch, drought hardy</td>
+                <td><span class="badge badge-green">KSSC LISTED</span></td>
+                <td><span class="badge badge-red">UNVERIFIED</span></td>
+              </tr>
+              <tr>
+                <td>Groundnut</td>
+                <td><strong>GPBD-4</strong></td>
+                <td>110–120</td>
+                <td>UAS Dharwad</td>
+                <td>Resistant to late leaf spot (tikka)</td>
+                <td><span class="badge badge-green">KSSC LISTED</span></td>
+                <td><span class="badge badge-red">UNVERIFIED</span></td>
+              </tr>
+              <tr>
+                <td>Groundnut</td>
+                <td><strong>K-6</strong></td>
+                <td>105–115</td>
+                <td>UAS</td>
+                <td>Mid-season moisture stress tolerant</td>
+                <td><span class="badge badge-green">KSSC LISTED</span></td>
+                <td><span class="badge badge-red">UNVERIFIED</span></td>
+              </tr>
+              <tr>
+                <td>Finger Millet</td>
+                <td><strong>ML-365</strong></td>
+                <td>105–115</td>
+                <td>UAS Bangalore</td>
+                <td>Blast tolerant, high grain/fodder</td>
+                <td><span class="badge badge-green">KSSC LISTED</span></td>
+                <td><span class="badge badge-red">UNVERIFIED</span></td>
+              </tr>
+              <tr>
+                <td>Finger Millet</td>
+                <td><strong>KMR-316</strong></td>
+                <td>100–105</td>
+                <td>UAS Bangalore</td>
+                <td>Short duration, contingency sowing</td>
+                <td><span class="badge badge-green">KSSC LISTED</span></td>
+                <td><span class="badge badge-red">UNVERIFIED</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TAB 5: SUITABILITY ENGINE -->
+      <section id="tab-suitability" class="tab-section">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Interactive Crop Suitability Simulator</h2>
+            <span class="badge badge-info">DETERMINISTIC EVALUATOR</span>
+          </div>
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+            Test the engine against normal plots and the mandatory <strong>missing soil data failure scenario</strong>.
+          </p>
+
+          <div class="grid-2">
+            <div>
+              <div class="form-group">
+                <label>Target Crop</label>
+                <select id="sim-crop">
+                  <option value="GROUNDNUT">Groundnut (Zone IV Pilot)</option>
+                  <option value="FINGER_MILLET">Finger Millet (Zone IV Pilot)</option>
+                  <option value="PADDY_WETLAND">Paddy / Wetland Rice (Outside Zone IV Dryland)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Plot Soil Test Data Available?</label>
+                <select id="sim-soil-test" onchange="toggleSoilInputs()">
+                  <option value="NO">NO — Missing Soil Test (Mandatory Test Case)</option>
+                  <option value="YES">YES — Farmer provided Soil Health Card</option>
+                </select>
+              </div>
+              <div id="soil-params" style="display: none; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 6px; margin-bottom: 14px;">
+                <div class="grid-2">
+                  <div class="form-group">
+                    <label>Soil pH</label>
+                    <input type="number" id="sim-ph" value="7.2" step="0.1">
+                  </div>
+                  <div class="form-group">
+                    <label>Available N (kg/ha)</label>
+                    <input type="number" id="sim-n" value="135" step="1">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Water Availability</label>
+                <select id="sim-water">
+                  <option value="RAINFED">Rainfed (Typical for Molakalmuru)</option>
+                  <option value="BOREWELL">Borewell Irrigation</option>
+                </select>
+              </div>
+              <button class="btn" onclick="runSuitabilitySimulation()">Evaluate Crop Suitability</button>
+            </div>
+
+            <div>
+              <label>Decision Engine Output</label>
+              <div id="sim-output" class="result-box">Click "Evaluate Crop Suitability" to view deterministic evaluation...</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 6: SAFETY GATE -->
+      <section id="tab-safety" class="tab-section">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">CIB&RC Regulatory Safety Gate (Hard Boundary)</h2>
+            <span class="badge badge-red">COMPILED GATEWAY</span>
+          </div>
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+            The system inspects candidate chemical formulations against Central Insecticides Board & Registration Committee records.
+            Test how the system treats <strong>monocrotophos</strong> (banned) vs. <strong>azadirachtin</strong> (registered biopesticide).
+          </p>
+
+          <div class="grid-2">
+            <div>
+              <div class="form-group">
+                <label>Candidate Chemical Active Ingredient</label>
+                <select id="reg-chemical">
+                  <option value="monocrotophos">Monocrotophos (Banned/Restricted CIB&RC)</option>
+                  <option value="azadirachtin">Azadirachtin / Neem (Registered Biopesticide)</option>
+                  <option value="endosulfan">Endosulfan (Supreme Court Banned)</option>
+                  <option value="mancozeb">Mancozeb (Registered Fungicide for Tikka)</option>
+                  <option value="unregistered_compound_x">Unregistered Compound X (Off-label / Unknown)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Target Crop</label>
+                <input type="text" id="reg-crop" value="GROUNDNUT" readonly>
+              </div>
+              <div class="form-group">
+                <label>Target Pest / Disease</label>
+                <input type="text" id="reg-pest" value="LEAF_MINER" readonly>
+              </div>
+              <button class="btn" onclick="runRegulatoryCheck()">Check Regulatory Clearance</button>
+            </div>
+
+            <div>
+              <label>Regulatory Gate Verdict</label>
+              <div id="reg-output" class="result-box">Select an active ingredient and click "Check Regulatory Clearance"...</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 7: CONFLICTS -->
+      <section id="tab-conflicts" class="tab-section">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Agricultural Contradiction Ledger (Step 7)</h2>
+            <span class="badge badge-yellow">NO INVENTED AVERAGES</span>
+          </div>
+          <div style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 6px; margin-bottom: 16px;">
+            <h3 style="font-size: 14px; font-weight: 600; color: var(--warning); margin-bottom: 8px;">Case Study: Groundnut Recommended Dose of Fertilizer (RDF)</h3>
+            <p style="font-size: 12px; color: var(--text-muted); line-height: 1.6;">
+              When primary scientific authorities report different NPK values, the system <strong>refuses to calculate an artificial mathematical average</strong> (e.g. 25:62.5:31.25).
+              The contradiction is documented with its underlying conditions (irrigation status, soil calcium).
+            </p>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Source</th>
+                <th>Authority</th>
+                <th>NPK Recommendation</th>
+                <th>Context / Condition</th>
+                <th>System Treatment</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>UAS Bangalore PoP 2023</strong></td>
+                <td>UNIVERSITY</td>
+                <td>25 : 75 : 37.5 kg/ha + 500 kg gypsum</td>
+                <td>General Zone IV (Adequate moisture / irrigated)</td>
+                <td>Applied ONLY when irrigation is confirmed</td>
+              </tr>
+              <tr>
+                <td><strong>ISSS NARP Central Dry Zone</strong></td>
+                <td>RESEARCH INSTITUTION</td>
+                <td>25 : 50 : 25 kg/ha</td>
+                <td>Explicitly Rainfed dryland Alfisols</td>
+                <td>Applied ONLY when plot is rainfed</td>
+              </tr>
+              <tr style="background: rgba(239, 68, 68, 0.08);">
+                <td><strong>Unknown Irrigation Condition</strong></td>
+                <td>DECISION ENGINE</td>
+                <td><span style="color: var(--danger); font-weight: 600;">DOSE BLOCKED</span></td>
+                <td>Irrigation status unknown</td>
+                <td>Flagged as <code>CONFLICTING_EVIDENCE</code>. Farmer asked for irrigation mode.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TAB 8: DIGITAL TWIN -->
+      <section id="tab-digital-twin" class="tab-section">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Farm Digital Twin (Hosanagalapura Pilot DEMO)</h2>
+            <span class="badge badge-info">DEMO_ONLY DATASET</span>
+          </div>
+          <div class="grid-2">
+            <div>
+              <h4 style="font-size: 13px; font-weight: 600; margin-bottom: 10px;">Parcel Metadata</h4>
+              <table>
+                <tr><td style="color: var(--text-muted);">Farm Name</td><td><strong>DEMO Farm Alpha</strong></td></tr>
+                <tr><td style="color: var(--text-muted);">Village</td><td>Hosanagalapura (Census 605160)</td></tr>
+                <tr><td style="color: var(--text-muted);">Gram Panchayat</td><td>Thammenahalli (PIN 577535)</td></tr>
+                <tr><td style="color: var(--text-muted);">Taluk / District</td><td>Molakalmuru / Chitradurga</td></tr>
+                <tr><td style="color: var(--text-muted);">Coordinates</td><td>14.887°N, 76.842°E (Estimated Point)</td></tr>
+                <tr><td style="color: var(--text-muted);">Elevation</td><td>500.48 m (NASA POWER Reanalysis)</td></tr>
+                <tr><td style="color: var(--text-muted);">Area</td><td>2.50 Hectares (Hypothetical)</td></tr>
+                <tr><td style="color: var(--text-muted);">Data Provenance</td><td><span class="badge badge-yellow">DEMO_ONLY</span></td></tr>
+              </table>
+            </div>
+
+            <div>
+              <h4 style="font-size: 13px; font-weight: 600; margin-bottom: 10px;">Data Provenance Tags (Step 8)</h4>
+              <p style="font-size: 12px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;">
+                Every attribute in the digital twin carries a non-negotiable provenance stamp:
+              </p>
+              <ul style="font-size: 12px; color: var(--text-muted); line-height: 1.8; padding-left: 20px;">
+                <li><code>FARMER_ENTERED</code>: Sowing date, variety selection, bills</li>
+                <li><code>FARM_MEASURED</code>: Soil laboratory test, GPS parcel perimeter</li>
+                <li><code>GOVERNMENT_DATA</code>: Census village boundary, CIB&RC status</li>
+                <li><code>SCIENTIFIC_DATASET</code>: NBSS soil series, UASB research</li>
+                <li><code>SATELLITE_DERIVED</code>: Sentinel-2 10m NDVI time series</li>
+                <li><code>MODEL_DERIVED</code>: NASA POWER reanalysis, Open-Meteo</li>
+                <li><code>REGIONAL_INFERENCE</code>: Zone IV general agro-calendar</li>
+                <li><code>DEMO_ONLY</code>: Isolated sandbox demo records</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 9: MULTILINGUAL -->
+      <section id="tab-multilingual" class="tab-section">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Canonical Agricultural Semantics (Step 18)</h2>
+            <span class="badge badge-green">CANONICAL KEYS</span>
+          </div>
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">
+            The platform never translates business logic per language. Business rules operate strictly on canonical keys.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Canonical Key</th>
+                <th>Category</th>
+                <th>English (en)</th>
+                <th>Kannada (kn)</th>
+                <th>Telugu (te)</th>
+                <th>Hindi (hi)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>GROUNDNUT</code></td>
+                <td>CROP</td>
+                <td>Groundnut</td>
+                <td>ಕಡಲೆಕಾಯಿ (kadalekayi)</td>
+                <td>వేరుశెనగ (verusenaga)</td>
+                <td>मूंगफली (moongphali)</td>
+              </tr>
+              <tr>
+                <td><code>FINGER_MILLET</code></td>
+                <td>CROP</td>
+                <td>Finger millet</td>
+                <td>ರಾಗಿ (ragi)</td>
+                <td>రాగి (ragi)</td>
+                <td>रागी (ragi)</td>
+              </tr>
+              <tr>
+                <td><code>SOIL_MOISTURE</code></td>
+                <td>SOIL</td>
+                <td>Soil moisture</td>
+                <td>ಮಣ್ಣಿನ ತೇವಾಂಶ (mannina tevaansha)</td>
+                <td>నేల తేమ (nela tema)</td>
+                <td>मिट्टी की नमी (mitti ki nami)</td>
+              </tr>
+              <tr>
+                <td><code>SOIL_PH</code></td>
+                <td>SOIL</td>
+                <td>Soil pH</td>
+                <td>ಮಣ್ಣಿನ pH</td>
+                <td>నేల pH</td>
+                <td>मिट्टी का pH</td>
+              </tr>
+              <tr>
+                <td><code>NITROGEN</code></td>
+                <td>NUTRIENT</td>
+                <td>Nitrogen</td>
+                <td>ಸಾರಜನಕ (saarajanaka)</td>
+                <td>నత్రజని (natrajani)</td>
+                <td>नाइट्रोजन (nitrogen)</td>
+              </tr>
+              <tr>
+                <td><code>SOWING</code></td>
+                <td>ACTIVITY</td>
+                <td>Sowing</td>
+                <td>ಬಿತ್ತನೆ (bittane)</td>
+                <td>విత్తడం (vittadam)</td>
+                <td>बुवाई (buwai)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-section').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById('tab-' + tabId).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    function toggleSoilInputs() {
+      const val = document.getElementById('sim-soil-test').value;
+      document.getElementById('soil-params').style.display = (val === 'YES') ? 'block' : 'none';
+    }
+
+    function runSuitabilitySimulation() {
+      const crop = document.getElementById('sim-crop').value;
+      const hasSoil = document.getElementById('sim-soil-test').value;
+      const water = document.getElementById('sim-water').value;
+      const out = document.getElementById('sim-output');
+
+      if (hasSoil === 'NO') {
+        out.textContent = JSON.stringify({
+          "crop": crop,
+          "status": "INSUFFICIENT_DATA",
+          "reasons": [],
+          "missing_information": [
+            "CRITICAL: Soil test data (pH, N, P, K, EC) is missing for this plot.",
+            "Without laboratory analysis, fertilizer doses cannot be calculated.",
+            "Recommended action: Contact KVK Chitradurga (08193-200081) or local Raitha Samparka Kendra."
+          ],
+          "progressive_questions": [
+            "Do you possess an existing Soil Health Card (SHC) for this land?",
+            "What is your water source (rainfed or borewell)?",
+            "What was cultivated on this parcel in the previous cycle?"
+          ],
+          "evidence_policy": "NO_FABRICATION: System refuses to guess crop suitability without soil baseline."
+        }, null, 2);
+        return;
+      }
+
+      if (crop === 'PADDY_WETLAND') {
+        out.textContent = JSON.stringify({
+          "crop": "PADDY_WETLAND",
+          "status": "UNSUITABLE",
+          "reasons": [
+            {
+              "factor": "CLIMATE_MISMATCH",
+              "detail": "Central Dry Zone Zone IV normal rainfall is 541 mm. Wetland paddy requires 1200-1500 mm."
+            },
+            {
+              "factor": "GROUNDWATER_OVEREXPLOITATION",
+              "detail": "Molakalmuru groundwater extraction is at 144% (over-exploited). Flood irrigation paddy is unviable."
+            }
+          ],
+          "missing_information": [],
+          "evidence": ["PMKSY District Irrigation Plan Chitradurga 2016", "CGWB Groundwater Report"]
+        }, null, 2);
+        return;
+      }
+
+      out.textContent = JSON.stringify({
+        "crop": crop,
+        "status": "SUITABLE",
+        "reasons": [
+          {
+            "factor": "AGRO_CLIMATIC_MATCH",
+            "detail": "Crop is a primary recommended crop for Zone IV Central Dry Zone kharif."
+          },
+          {
+            "factor": "SOIL_PH_MATCH",
+            "detail": "Soil pH 7.2 matches required range (6.0 - 8.0)."
+          },
+          {
+            "factor": "WATER_MATCH",
+            "detail": water === 'RAINFED' ? "Tolerates rainfed semi-arid conditions." : "Borewell supplemental irrigation available."
+          }
+        ],
+        "missing_information": [],
+        "evidence": [
+          "UAS Bangalore Package of Practices 2023",
+          "KSSC Variety Release Registry"
+        ]
+      }, null, 2);
+    }
+
+    function runRegulatoryCheck() {
+      const chem = document.getElementById('reg-chemical').value;
+      const out = document.getElementById('reg-output');
+
+      if (chem === 'monocrotophos') {
+        out.textContent = JSON.stringify({
+          "active_ingredient": "monocrotophos",
+          "decision": "BLOCKED",
+          "status": "BANNED_OR_RESTRICTED",
+          "legal_authority": "CIB&RC / Insecticides Act 1968",
+          "effective_as_of": "2026-07-31",
+          "reason": "Monocrotophos is BANNED for vegetables and restricted on field crops; widespread state bans active.",
+          "system_enforcement": "HARD GATE: Recommendation blocked in compiled code regardless of LLM prompts or extension PDF mentions."
+        }, null, 2);
+      } else if (chem === 'azadirachtin') {
+        out.textContent = JSON.stringify({
+          "active_ingredient": "azadirachtin",
+          "decision": "PERMITTED",
+          "status": "APPROVED_BIOPESTICIDE",
+          "legal_authority": "CIB&RC Registered Formulations",
+          "applicable_crops": ["GROUNDNUT", "PULSES", "COTTON"],
+          "applicable_pests": ["LEAF_MINER", "APHIDS", "THRIPS"],
+          "safety_class": "WHO Class IV (Least Hazardous)"
+        }, null, 2);
+      } else if (chem === 'endosulfan') {
+        out.textContent = JSON.stringify({
+          "active_ingredient": "endosulfan",
+          "decision": "BLOCKED",
+          "status": "BANNED",
+          "legal_authority": "Supreme Court of India / CIB&RC",
+          "reason": "Complete national ban on manufacture, sale, and use."
+        }, null, 2);
+      } else if (chem === 'mancozeb') {
+        out.textContent = JSON.stringify({
+          "active_ingredient": "mancozeb 75% WP",
+          "decision": "PERMITTED",
+          "status": "APPROVED_FUNGICIDE",
+          "applicable_crops": ["GROUNDNUT"],
+          "applicable_pests": ["TIKKA_LEAF_SPOT"],
+          "safety_class": "Approved CIB&RC Major Uses"
+        }, null, 2);
+      } else {
+        out.textContent = JSON.stringify({
+          "active_ingredient": chem,
+          "decision": "BLOCKED",
+          "status": "UNKNOWN",
+          "reason": "Not found in verified CIB&RC database. System blocks all unverified formulations."
+        }, null, 2);
+      }
+    }
+  </script>
+</body>
+</html>

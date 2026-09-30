@@ -1,0 +1,104 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AgriculturalKnowledgeRecord",
+  "description": "Schema for canonical agricultural knowledge records with mandatory evidence provenance",
+  "type": "object",
+  "required": [
+    "id",
+    "canonical_key",
+    "category",
+    "geographic_scope",
+    "evidence",
+    "content"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "canonical_key": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "CROP_REQUIREMENT",
+        "CROP_CALENDAR",
+        "NUTRIENT_RDF",
+        "PEST_MANAGEMENT",
+        "DISEASE_MANAGEMENT",
+        "SOIL_CLASSIFICATION",
+        "CLIMATE_BASELINE",
+        "REGULATORY_STATUS"
+      ]
+    },
+    "geographic_scope": {
+      "type": "object",
+      "required": ["resolution", "country"],
+      "properties": {
+        "resolution": {
+          "type": "string",
+          "enum": ["NATIONAL", "STATE", "ZONE", "DISTRICT", "TALUK", "VILLAGE", "FARM"]
+        },
+        "country": { "type": "string" },
+        "state": { "type": "string" },
+        "zone": { "type": "string" },
+        "district": { "type": "string" },
+        "taluk": { "type": "string" },
+        "village_code": { "type": "string" }
+      }
+    },
+    "conditions": {
+      "type": "object",
+      "description": "Preconditions required for this knowledge to be applicable"
+    },
+    "content": {
+      "type": "object",
+      "description": "Structured scientific or operational data"
+    },
+    "confidence": {
+      "type": "string",
+      "enum": [
+        "VERIFIED_APPLICABLE",
+        "REGIONAL_INFERENCE",
+        "CONFLICTING_EVIDENCE",
+        "INSUFFICIENT_DATA",
+        "EXPERT_REVIEW_REQUIRED"
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["source_name", "authority_level", "citation", "license_band"],
+      "properties": {
+        "source_name": { "type": "string" },
+        "authority_level": {
+          "type": "string",
+          "enum": [
+            "GOVERNMENT",
+            "RESEARCH_INSTITUTION",
+            "UNIVERSITY",
+            "PEER_REVIEWED_JOURNAL",
+            "EXTENSION_SERVICE",
+            "INDUSTRY"
+          ]
+        },
+        "citation": { "type": "string" },
+        "document_url": { "type": "string" },
+        "page_or_table": { "type": "string" },
+        "license_band": { "type": "string", "enum": ["GREEN", "YELLOW", "RED"] },
+        "observation_type": {
+          "type": "string",
+          "enum": [
+            "FIELD_OBSERVATION",
+            "LABORATORY_ANALYSIS",
+            "SATELLITE_DERIVED",
+            "MODEL_OUTPUT",
+            "SURVEY_DATA",
+            "EXPERT_OPINION"
+          ]
+        },
+        "verified": { "type": "boolean" }
+      }
+    }
+  }
+}
